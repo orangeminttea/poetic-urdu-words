@@ -159,7 +159,7 @@ h2{font-size:16px;line-height:19px;font-weight:700;letter-spacing:0;margin:9px 0
 
   // ---- one tick at a time ----
   // The head follows your finger up to the next tick, then gets sticky (RESIST), so pulling past it takes real effort.
-  var SORT=STOPS.slice().sort(function(a,b){return a-b}),RESIST=0.35;
+  var SORT=STOPS.slice().sort(function(a,b){return a-b}),RESIST=0.15;
   function resist(raw){
     var a=STOPS[anchorIdx],lo=a,hi=a;
     for(var i=0;i<SORT.length;i++){if(SORT[i]<a)lo=SORT[i];if(SORT[i]>a&&hi===a)hi=SORT[i]}
@@ -185,7 +185,7 @@ h2{font-size:16px;line-height:19px;font-weight:700;letter-spacing:0;margin:9px 0
     var steps=Math.floor(fi+0.8);
     if(steps<1&&along>250)steps=1;
     if(along<-250)steps=0;
-    var maxSteps=1+(along>1800?1:0)+(along>3200?1:0);
+    var maxSteps=1+(along>3500?1:0)+(along>6000?1:0);
     steps=Math.max(0,Math.min(steps,maxSteps));
     return SORT[Math.max(0,Math.min(SORT.length-1,ai+dir*steps))];
   }
