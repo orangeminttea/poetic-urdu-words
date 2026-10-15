@@ -29,12 +29,16 @@ h2{font-size:16px;line-height:19px;font-weight:700;letter-spacing:0;margin:9px 0
 .L.on .fl path{fill:var(--hl)}
 .L.on .fl path:not(.ns){filter:url(#sh)}
 .L.on .sd{display:block;fill:var(--hl-shadow);opacity:.4}
-.track{position:absolute;left:8px;top:233px;width:184px;height:12px;cursor:pointer}
-.line{position:absolute;left:34px;width:125px;top:5px;height:2px;background:#444}
+.track{position:absolute;left:8px;top:247px;width:184px;height:12px;cursor:pointer}
+.line{position:absolute;left:35.3px;width:125.4px;top:5px;height:2px;background:#444}
 .tick{position:absolute;z-index:1;top:1px;width:3px;height:10px;margin-left:-1.5px;border-radius:2px;background:var(--pink)}
 .head{position:absolute;z-index:2;top:-10px;left:0;width:32px;height:32px;margin-left:-16px;border-radius:50%;background:var(--navy);cursor:grab;touch-action:none}
 .head.drag{cursor:grabbing;transform:scale(1.08)}
-.listen{position:relative;display:block;width:55px;height:46px;margin:70px auto 0;padding:0;border:0;border-radius:34px;background:var(--chip);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .12s ease}
+.head{-webkit-tap-highlight-color:transparent}
+/* invisible, larger touch areas: the head looks the same but is about 56px to grab; the track strip is about 44px tall to tap */
+.head::before{content:"";position:absolute;inset:-12px;border-radius:50%}
+.track::before{content:"";position:absolute;left:-12px;right:-12px;top:-16px;bottom:-16px}
+.listen{position:relative;display:block;width:55px;height:46px;margin:84px auto 0;padding:0;border:0;border-radius:34px;background:var(--chip);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .12s ease}
 .listen:active{transform:scale(.95)}
 .listen svg{position:absolute;left:12.54px;top:10.54px;width:30px;height:29px;overflow:visible}
 .listen .w{transition:opacity .15s}
@@ -77,10 +81,10 @@ h2{font-size:16px;line-height:19px;font-weight:700;letter-spacing:0;margin:9px 0
 (function(){
   // Stops measured from the Figma frame (px along the 184px track). Order = reading order of the word, right to left.
   var LETTERS=[
-    {ch:"\u06AF",name:"Gaaf",lt:"g",x:159},
-    {ch:"\u0631",name:"Re",lt:"r",x:121},
-    {ch:"\u062F",name:"Daal",lt:"d",x:83},
-    {ch:"\u0634",name:"Sheen",lt:"sh",x:34}
+    {ch:"\u06AF",name:"Gaaf",lt:"g",x:160.7},
+    {ch:"\u0631",name:"Re",lt:"r",x:119.1},
+    {ch:"\u062F",name:"Daal",lt:"d",x:81.6},
+    {ch:"\u0634",name:"Sheen",lt:"sh",x:35.3}
   ];
   var STOPS=LETTERS.map(function(l){return l.x});
   var MIN=Math.min.apply(null,STOPS),MAX=Math.max.apply(null,STOPS);
@@ -126,9 +130,20 @@ h2{font-size:16px;line-height:19px;font-weight:700;letter-spacing:0;margin:9px 0
   }
   function audio(){
     if(!ac){try{ac=new (window.AudioContext||window.webkitAudioContext)();loadClick()}catch(e){}}
-    if(ac&&ac.state==="suspended")ac.resume();
+    if(ac&&ac.state!=="running")ac.resume();
     return ac;
   }
+  // iPhone/iPad: audio only unlocks after a finished tap, and the ringer switch mutes Web Audio unless the page asks for "playback".
+  var silentDone=false;
+  function unlockAudio(){
+    try{if(navigator.audioSession)navigator.audioSession.type="playback"}catch(e){}
+    audio();
+    if(!silentDone){
+      silentDone=true;
+      try{var sa=new Audio("data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA");sa.play().catch(function(){})}catch(e){}
+    }
+  }
+  ["pointerup","touchend","click"].forEach(function(t){document.addEventListener(t,unlockAudio,{passive:true})});
   // delay = seconds from now until the head reaches the tick; the sample starts early so its peak lands on it
   function click(delay){
     var a=audio();if(!a||!clickBuf)return;
