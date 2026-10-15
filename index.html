@@ -16,7 +16,7 @@ body{background:var(--page);font-family:"Whitney HTF","Helvetica Neue",Arial,san
 .sheet{background:var(--card);width:100%;max-width:402px;min-height:100vh;margin-top:40px;border-radius:20px 20px 0 0;text-align:center;padding:60px 0 40px;box-sizing:border-box;touch-action:none;user-select:none;-webkit-user-select:none}
 h1{font-size:34px;line-height:40px;font-weight:500;margin:0;color:#130303}
 h2{font-size:16px;line-height:19px;font-weight:700;letter-spacing:0;margin:9px 0 0;color:#130303}
-.stage{position:relative;width:199px;height:242px;margin:70px auto 0}
+.stage{position:relative;width:199px;height:242px;margin:90px auto 0}
 .bubble{position:absolute;top:-41px;width:120px;height:102px;background:var(--chip);border-radius:10px;transition:left .18s ease}
 .bubble:after{content:"";position:absolute;left:50%;bottom:-9px;margin-left:-9px;border:9px solid transparent;border-bottom:0;border-top-color:var(--chip)}
 .bubble .iso{height:58px;margin-top:8px}
@@ -29,14 +29,14 @@ h2{font-size:16px;line-height:19px;font-weight:700;letter-spacing:0;margin:9px 0
 .L.on .fl path{fill:var(--hl)}
 .L.on .fl path:not(.ns){filter:url(#sh)}
 .L.on .sd{display:block;fill:var(--hl-shadow);opacity:.4}
-.track{position:absolute;left:8px;top:247px;width:184px;height:12px;cursor:pointer}
+.track{position:absolute;left:8px;top:267px;width:184px;height:12px;cursor:pointer}
 .line{position:absolute;left:35.3px;width:125.4px;top:5px;height:2px;background:#444}
 .tick{position:absolute;z-index:1;top:1px;width:3px;height:10px;margin-left:-1.5px;border-radius:2px;background:var(--pink)}
-.head{position:absolute;z-index:2;top:-10px;left:0;width:32px;height:32px;margin-left:-16px;border-radius:50%;background:var(--navy);cursor:grab;touch-action:none}
+.head{position:absolute;z-index:2;top:-16px;left:0;width:44px;height:44px;margin-left:-22px;border-radius:50%;background:var(--navy);cursor:grab;touch-action:none}
 .head.drag{cursor:grabbing;transform:scale(1.08)}
 .head{-webkit-tap-highlight-color:transparent}
 /* invisible, larger touch areas: the head looks the same but is about 56px to grab; the track strip is about 44px tall to tap */
-.head::before{content:"";position:absolute;inset:-12px;border-radius:50%}
+.head::before{content:"";position:absolute;inset:-6px;border-radius:50%}
 .track::before{content:"";position:absolute;left:-12px;right:-12px;top:-16px;bottom:-16px}
 .listen{position:relative;display:block;width:55px;height:46px;margin:84px auto 0;padding:0;border:0;border-radius:34px;background:var(--chip);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .12s ease}
 .listen:active{transform:scale(.95)}
